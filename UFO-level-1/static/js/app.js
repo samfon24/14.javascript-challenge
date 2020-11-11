@@ -29,7 +29,6 @@ var button = d3.select("#filter-btn");
 
 // When button is clicked
 button.on("click", function() {
-    var ifStatement = 1
 
     // Select the input element and get the raw HTML node
     var inputElement = d3.select("#datetime");
@@ -44,26 +43,27 @@ button.on("click", function() {
     
     console.log(filteredData);
 
-    if (ifStatement == 1) {
-
+    // Delete Table
+    if (filteredData.length > 0) {
+        let tbody = d3.select('tbody')
         delTable = tbody.html("");
+        d3.select("table").append('tbody')
 
-    };
+        // Repopulate Table with Filtered Data
+        filteredData.forEach(ufoEventFiltered => {
 
-    // Reference to table body
-    var tbody = d3.select("tbody");
+            var row = tbody.append('tr');
 
-    // Repopulate Table with Filtered Data
-    filteredData.forEach(ufoEventFiltered => {
+            Object.values(ufoEventFiltered).forEach(value => {
 
-        var row = tbody.append('tr');
-
-        Object.values(ufoEventFiltered).forEach(value => {
-
-        row.append('td').text(value);
-    
+            row.append('td').text(value);
+            
+            });
         });
-
-    });
-    
+    }
+    else {
+        let tbody = d3.select('tbody')
+        delTable = tbody.html("")
+        d3.select("table").append('tbody')
+    }
 });
